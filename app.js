@@ -94,7 +94,7 @@ server.get("/states/:stateId/stats/", async (request, response) => {
 
 server.get("/districts/:districtId/details/", async (request, response) => {
   const { districtId } = request.params;
-  const query = `SELECT state.state_name as sn FROM district JOIN state ON district.state_id = state.state_id WHERE district.state_id = ${districtId} LIMIT 1`;
+  const query = `SELECT state.state_name as sn FROM district NATURAL JOIN state WHERE district_id = ${districtId}`;
   const dbResponse = await databaseConnection.get(query);
   response.send(stateName(dbResponse));
 });
